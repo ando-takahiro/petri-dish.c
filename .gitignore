@@ -24,3 +24,4 @@ Makefile
 cmake_install.cmake
 config.mk
 stamp-h1
+bin/
