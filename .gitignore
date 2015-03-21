@@ -1,0 +1,26 @@
+# based on https://github.com/tarantool/tarantool/blob/master/.gitignore
+_CPack_Packages
+*.a
+*.cbp
+*.d
+*.dylib
+*.gcno
+*.gcda
+*.o
+*.la
+*.lo
+*.reject
+*.so
+*~
+.deps
+.libs
+autom4te.cache
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+Makefile
+cmake_install.cmake
+config.mk
+stamp-h1
