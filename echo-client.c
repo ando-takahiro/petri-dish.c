@@ -24,15 +24,16 @@ ev_io remote_w;
 ev_io send_w;
 int remote_fd;
 char* line = NULL;
-size_t len = 0;
+size_t len = 0, len2 = 0;
+int count = 0;
 
 static void send_cb (EV_P_ ev_io *w, int revents)
 {
   if (revents & EV_WRITE)
   {
-    puts ("remote ready for writing...");
+    printf ("remote ready for writing...:%d\n", len);
 
-    if (-1 == send(remote_fd, line, len, 0)) {
+    if (-1 == send(remote_fd, line, len2, 0)) {
       perror("echo send");
       exit(EXIT_FAILURE);
     }
@@ -46,9 +47,10 @@ static void send_cb (EV_P_ ev_io *w, int revents)
   else if (revents & EV_READ)
   {
     int n;
-    char str[100] = ".\0";
+    char str[101] = ".\0";
+    str[100] = '\0';
 
-    printf("[r,remote]");
+    printf("%d:[r,remote]", count++);
     n = recv(remote_fd, str, 100, 0);
     if (n <= 0) {
       if (0 == n) {
@@ -70,8 +72,6 @@ static void send_cb (EV_P_ ev_io *w, int revents)
 
 static void stdin_cb (EV_P_ ev_io *w, int revents)
 {
-  int len2; // not sure if this is at all useful
-
   puts ("stdin written to, reading...");
   len2 = getline(&line, &len, stdin);
   ev_io_stop(EV_A_ &send_w);
